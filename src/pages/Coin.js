@@ -1,23 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import COIN from "../coin.json";
 import { price } from "../modules/format_numbers";
 import CoinDetailsTable from "../components/CoinDetailsTable";
 import Trade from "../components/Trade";
+import { getLocalWatchList } from "../modules/getLocal";
+import axios from "axios";
 
 function Coin() {
   const { id } = useParams();
   const [coin, setCoin] = useState();
+  const [inWatchList, setInWatchList] = useState(false);
 
   useEffect(() => {
-    // axios
-    //   .get(
-    //     `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
-    //   )
-    //   .then(res => setCoin(res.data))
-    //   .catch(err => console.log(err));
-    setCoin(COIN);
+    axios
+      .get(
+        `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
+      )
+      .then(res => {
+        setCoin(res.data);
+        setInWatchList(getLocalWatchList().includes(res.data.id));
+      })
+      .catch(err => console.log(err));
   }, [id]);
+
+  function addToWatchlist() {
+    const watchList = getLocalWatchList();
+
+    if (!watchList) {
+      localStorage.setItem("watchlist", JSON.stringify([coin.id]));
+    } else {
+      if (inWatchList) {
+        localStorage.setItem(
+          "watchlist",
+          JSON.stringify(watchList.filter(c => c !== coin.id))
+        );
+      } else {
+        localStorage.setItem(
+          "watchlist",
+          JSON.stringify([coin.id, ...watchList])
+        );
+      }
+      setInWatchList(prev => !prev);
+    }
+  }
 
   if (coin) {
     return (
@@ -28,8 +53,9 @@ function Coin() {
           <span className="text-secondary">{coin.symbol.toUpperCase()}</span>
           <i
             role="button"
-            className="bi bi-star"
+            className={`bi bi-star${inWatchList ? "-fill text-yellow" : ""}`}
             title="Click to add to WatchList"
+            onClick={addToWatchlist}
           ></i>
         </div>
         <div>

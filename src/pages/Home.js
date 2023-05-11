@@ -3,26 +3,27 @@ import { CoinsContext } from "../context/CoinsContext";
 import axios from "axios";
 import CoinRow from "../components/CoinRow";
 import Coiins from "../coins.json";
+import Pagination from "../components/Pagination";
 
 function Home() {
-  let { coins, setCoins } = useContext(CoinsContext);
+  let { coins, setCoins, didSearch } = useContext(CoinsContext);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    // axios
-    // .get(
-    //    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false`
-    // )
-    // .then(res => {
-    // setCoins(res.data);
-    // });
+    axios
+      .get(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false`
+      )
+      .then(res => {
+        setCoins(res.data);
+      });
 
-    setCoins(Coiins);
+    // setCoins(Coiins);
   }, [page, setCoins]);
 
   return (
-    <div>
-      <div className="container mt-5">
+    <>
+      <div className="container my-5">
         <div className="row py-3 border-top border-bottom">
           <h5 className="col-5 col-sm-4 col-md-3 col-lg-3">Name</h5>
           <h5 className="col-4 col-sm-3 col-md-2 col-lg-2">Price</h5>
@@ -38,7 +39,8 @@ function Home() {
           <CoinRow key={coin.id} coin={coin} />
         ))}
       </div>
-    </div>
+      {!didSearch && <Pagination page={page} setPage={setPage} />}
+    </>
   );
 }
 

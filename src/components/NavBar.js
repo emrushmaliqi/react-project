@@ -24,7 +24,7 @@ function NavBar() {
   }, [location]);
 
   return (
-    <header id="header">
+    <header id="header" className="position-sticky top-0">
       <nav className="container navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand" id="navTitle">

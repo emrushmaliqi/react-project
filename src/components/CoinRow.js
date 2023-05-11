@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { compactPrice, price } from "../modules/format_numbers";
 
-function CoinRow({ coin }) {
+function CoinRow({ coin, handleStar = false }) {
   return (
     <>
       <div
@@ -39,13 +39,21 @@ function CoinRow({ coin }) {
           <p>{compactPrice.format(coin.total_volume)}</p>
         </div>
         <div className="col-md-1 col-3 d-flex align-items-center gap-2">
-          <Link
-            type="button"
-            className="btn btn-primary"
-            to={`/coin/${coin.id}`}
-          >
-            Details
-          </Link>
+          {handleStar ? (
+            <i
+              type="button"
+              className="bi bi-star-fill text-yellow unWatch"
+              onClick={() => handleStar(coin.id)}
+            ></i>
+          ) : (
+            <Link
+              type="button"
+              className="btn btn-primary"
+              to={`/coin/${coin.id}`}
+            >
+              Details
+            </Link>
+          )}
         </div>
       </div>
     </>

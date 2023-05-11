@@ -5,13 +5,17 @@ import Wallet from "./pages/Wallet";
 import Coin from "./pages/Coin";
 import NavBar from "./components/NavBar";
 import { CoinsContext } from "./context/CoinsContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [coins, setCoins] = useState([]);
+  const [didSearch, setDidSearch] = useState(false);
+
   return (
     <div className="App">
-      <CoinsContext.Provider value={{ coins, setCoins }}>
+      <CoinsContext.Provider
+        value={{ coins, setCoins, didSearch, setDidSearch }}
+      >
         <NavBar />
         <Routes>
           <Route exact path="/" element={<Home />} />

@@ -34,7 +34,7 @@ function Wallet() {
   if (wallet)
     return (
       <div>
-        <h2 className="container mt-4">Wallet</h2>
+        <h2 className="container my-4">Wallet</h2>
         <div id="tokens" className="container my-5">
           <div className="row px-sm-4 px-lg-4 mx-sm-5 py-2 border-bottom">
             <span className="col-3">Token</span>
