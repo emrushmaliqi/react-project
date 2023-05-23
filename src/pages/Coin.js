@@ -20,7 +20,7 @@ function Coin() {
         setCoin(res.data);
         setInWatchList(getLocalWatchList().includes(res.data.id));
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }, [id]);
 
   function addToWatchlist() {

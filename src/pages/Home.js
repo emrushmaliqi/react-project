@@ -10,15 +10,16 @@ function Home() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false`
-      )
-      .then(res => {
-        setCoins(res.data);
-      });
-
-    // setCoins(Coiins);
+    if (page === 1) setCoins(Coiins);
+    else
+      axios
+        .get(
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${page}&sparkline=false`
+        )
+        .then(res => {
+          setCoins(res.data);
+        })
+        .catch(err => console.error(err));
   }, [page, setCoins]);
 
   return (

@@ -16,7 +16,7 @@ function Search({ path }) {
         `https://api.coingecko.com/api/v3/search?query=${search.replaceAll(
           " ",
           "%20"
-        )} `
+        )}`
       );
       const coinsId = data.coins.map(coin => coin.id);
 

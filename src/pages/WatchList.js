@@ -10,7 +10,6 @@ function WatchList() {
     const watchList = getLocalWatchList();
     let idsQuery = "&ids=";
 
-    console.log(watchList);
     if (watchList.length > 0) {
       idsQuery += watchList.join(",");
       axios
@@ -20,9 +19,10 @@ function WatchList() {
         .then(res => {
           setCoins(res.data);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     }
   }
+
   useEffect(() => {
     fetchCoins();
   }, []);

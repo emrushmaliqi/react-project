@@ -24,11 +24,12 @@ function Wallet() {
       idsQuery += ids.join(",");
       axios
         .get(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd${idsQuery}&order=market_cap_desc&per_page=250&page=1&sparkline=false`
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd${idsQuery}&order=market_cap_desc&sparkline=false`
         )
         .then(res => {
           setCoins(res.data);
-        });
+        })
+        .catch(err => console.error(err));
     }
   }, []);
   if (wallet)

@@ -12,7 +12,6 @@ function Trade({ id, name, symbol, price }) {
     const localWallet = getLocalWallet();
     if (localWallet) {
       if (localWallet[id]) {
-        console.log("sfaf");
         setWalletData(localWallet);
       } else {
         localStorage.setItem(
@@ -25,7 +24,7 @@ function Trade({ id, name, symbol, price }) {
       localStorage.setItem("wallet", JSON.stringify({ usd: 10000, [id]: 0 }));
       setWalletData(getLocalWallet());
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (walletData) localStorage.setItem("wallet", JSON.stringify(walletData));
