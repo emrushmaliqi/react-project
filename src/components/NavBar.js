@@ -68,7 +68,7 @@ function NavBar() {
                 </Link>
               </li>
             </ul>
-            <Search path={path} />
+            <Search />
           </div>
         </div>
       </nav>

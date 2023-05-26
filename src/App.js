@@ -5,23 +5,22 @@ import Wallet from "./pages/Wallet";
 import Coin from "./pages/Coin";
 import NavBar from "./components/NavBar";
 import { CoinsContext } from "./context/CoinsContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Search from "./pages/Search";
 
 function App() {
   const [coins, setCoins] = useState([]);
-  const [didSearch, setDidSearch] = useState(false);
 
   return (
     <div className="App">
-      <CoinsContext.Provider
-        value={{ coins, setCoins, didSearch, setDidSearch }}
-      >
+      <CoinsContext.Provider value={{ coins, setCoins }}>
         <NavBar />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/watchlist" element={<WatchList />} />
           <Route exact path="/wallet" element={<Wallet />} />
           <Route exact path="/coin/:id" element={<Coin />} />
+          <Route exact path="search/:query" element={<Search />} />
         </Routes>
       </CoinsContext.Provider>
     </div>
